@@ -98,6 +98,20 @@ public class LinkedHashMap<K, V> {
      * @return The value associated with the key, or null if the key does not exist
      */
     public V get(K key) {
+        // Calculate bucket index by hashing the key
+        // Store the head node of the bucket linked list
+        int index = hash(key);
+        Node<K, V> currentNode = table[index];
+
+        // Traverse through the linked hash map to find the key
+        while (currentNode != null) {
+            if (Objects.equals(currentNode.key, key)) {
+                return currentNode.value;
+            }
+            currentNode = currentNode.next;
+        }
+        // If key not found, return null
+        return null;
     }
 
     /**
