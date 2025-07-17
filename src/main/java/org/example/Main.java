@@ -10,6 +10,8 @@ public class Main {
             linkedHashMap.put("Two", 2);
             linkedHashMap.put("Three", 3);
             linkedHashMap.put("One", 11);
+
+            linkedHashMap.print();
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }

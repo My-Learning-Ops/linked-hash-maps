@@ -92,6 +92,15 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
+     * Retrieves the value associated with the given key
+     * 
+     * @param key The key to look up
+     * @return The value associated with the key, or null if the key does not exist
+     */
+    public V get(K key) {
+    }
+
+    /**
      * Prints all key-value pairs in the LinkedHashMap in insertion order
      */
     public void print() {
