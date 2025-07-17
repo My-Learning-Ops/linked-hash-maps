@@ -30,4 +30,16 @@ public class LinkedHashMap {
         table = new Node[capacity];
     }
 
+    /**
+     * Calculates the hash code for a given key,
+     * where the hash code represents which bucket (index) the key-value pair will
+     * be stored in.
+     * 
+     * @param key The key to hash
+     * @return The bucket index for the key
+     */
+    private int hash(K key) {
+        return Math.abs(Objects.hashCode(key)) % capacity;
+    }
+
 }
