@@ -45,33 +45,41 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
-     * Inserts a new key-value pair into the LinkedHashMap
+     * Inserts a new key-value pair into the LinkedHashMap.
+     * If the key already exists, its value is updated.
+     * Otherwise, a new node is created and inserted into the appropriate hash
+     * bucket
      * 
-     * @param key
-     * @param value
+     * @param key   The key to insert or update
+     * @param value The value associated with the key
      */
     public void put(K key, V value) {
+
+        // Calculate bucket index by hashing the key
         int index = hash(key);
+
+        // Start at heade node of the bucket linked list
         Node<K, V> currentNode = table[index];
 
         // Traverse through the linked hash map to determine if the key already exists
         while (currentNode != null) {
+            // If found, update and return
             if (Objects.equals(currentNode.key, key)) {
                 currentNode.value = value;
                 return;
             }
+            // Otherwise move to the next node
             currentNode = currentNode.next;
         }
 
-        // If key not found, create new node and insert it at head
+        // If key not found, create new node
         Node<K, V> newNode = new Node<>(key, value);
+
+        // Insert new node at head of of bucket chain / linked list
         newNode.next = table[index];
-
-        if (table[index] != null)
-            table[index].prev = newNode;
-
         table[index] = newNode;
 
+        // Maintain insertion order by adding to the end of the doubly linked list
         if (head == null) {
             head = newNode;
             tail = newNode;
