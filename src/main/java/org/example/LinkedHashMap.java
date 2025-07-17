@@ -1,11 +1,10 @@
-package org.example;
 
 import java.util.Objects;
 
 /**
  * A generic implementation of a LinkedHashMap
  */
-public class LinkedHashMap {
+public class LinkedHashMap<K, V> {
 
     // The Nodes stored in the LinkedHashMap
     private static class Node<K, V> {
@@ -82,6 +81,17 @@ public class LinkedHashMap {
             tail = newNode;
         }
         size++;
+    }
+
+    /**
+     * Prints all key-value pairs in the LinkedHashMap in insertion order
+     */
+    public void print() {
+        Node<K, V> current = head;
+        while (current != null) {
+            System.out.println("Key: " + current.key + ", Value: " + current.value);
+            current = current.next;
+        }
     }
 
 }
