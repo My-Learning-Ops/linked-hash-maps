@@ -115,6 +115,16 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
+     * Checks if the provided key exists in the LinkedHashMap
+     * 
+     * @param key The key to check for
+     * @return true if the key exists, false otherwise
+     */
+    public boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
+    /**
      * Prints all key-value pairs in the LinkedHashMap in insertion order
      */
     public void print() {
