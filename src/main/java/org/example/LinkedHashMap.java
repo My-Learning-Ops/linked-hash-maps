@@ -134,6 +134,19 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
+     * Removes an entry from the LinkedHashMap given the key
+     * 
+     * @param key The key of the key-value pair to remove
+     * @return
+     */
+    public V remove(K key) {
+    }
+
+    @Override
+    public String toString() {
+    }
+
+    /**
      * Prints all key-value pairs in the LinkedHashMap in insertion order
      */
     public void print() {
