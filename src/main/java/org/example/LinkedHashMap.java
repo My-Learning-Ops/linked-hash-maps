@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 /**
  * A generic implementation of a LinkedHashMap
  */
@@ -27,6 +29,7 @@ public class LinkedHashMap {
 
     // Constructs an empty LinkedHashMap with a default capacity
     public LinkedHashMap() {
+        // Creates an array of Node objects (Node<K, V>)
         table = new Node[capacity];
     }
 
@@ -40,6 +43,45 @@ public class LinkedHashMap {
      */
     private int hash(K key) {
         return Math.abs(Objects.hashCode(key)) % capacity;
+    }
+
+    /**
+     * Inserts a new key-value pair into the LinkedHashMap
+     * 
+     * @param key
+     * @param value
+     */
+    public void put(K key, V value) {
+        int index = hash(key);
+        Node<K, V> currentNode = table[index];
+
+        // Traverse through the linked hash map to determine if the key already exists
+        while (currentNode != null) {
+            if (Objects.equals(currentNode.key, key)) {
+                currentNode.value = value;
+                return;
+            }
+            currentNode = currentNode.next;
+        }
+
+        // If key not found, create new node and insert it at head
+        Node<K, V> newNode = new Node<>(key, value);
+        newNode.next = table[index];
+
+        if (table[index] != null)
+            table[index].prev = newNode;
+
+        table[index] = newNode;
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.prev = tail;
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
     }
 
 }
