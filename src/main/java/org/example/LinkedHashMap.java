@@ -125,6 +125,15 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
+     * Returns the number of key-value pairs in the LinkedHashMap
+     * 
+     * @return The size of the LinkedHashMap
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
      * Prints all key-value pairs in the LinkedHashMap in insertion order
      */
     public void print() {
