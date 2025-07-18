@@ -137,56 +137,78 @@ public class LinkedHashMap<K, V> {
      * Removes an entry from the LinkedHashMap given the key
      * 
      * @param key The key of the key-value pair to remove
-     * @return
+     * @return The value associated with the removed key, or null if the key does not exist
      */
     public V remove(K key) {
         // Calculate bucket index by hashing the key
         int index = hash(key);
+
+        // Get first node in the bucket linked list
         Node<K, V> currentNode = table[index];
         Node<K, V> previousNode = null;
 
-        // Traverse through the linked hash map to find the key
+        // Traverse through the hash bucket linked list to find the target key
         while (currentNode != null) {
-            // Compare the current node's key with the provided key
+            
+            // Check if the current node's key matches the key to be removed
             if (Objects.equals(currentNode.key, key)) {
+
                 // If found, check if the previous node is null
+
+                // Check if this is the first node in the bucket
                 if (previousNode == null) {
-                    // If so, remove from head of bucket
+                    // If so, set buckets head to the next node
                     table[index] = currentNode.next;
                 } else {
-                    // Otherwise, set the previous node's reference to the current node's next
+                    // Otherwise, bypass the current node in the chain
                     previousNode.next = currentNode.next;
                 }
 
-                // Remove from insetrion order list
+                // If the node has a previous node in insertion order
                 if (currentNode.prev != null) {
                     // Update previous node's next reference
                     currentNode.prev.next = currentNode.next;
                 } else {
-                    // Update head if it was the first node
+                    // If it's the head of the insertion order list, move head forward
                     head = currentNode.next;
                 }
 
-                // 
+                // Check if node has a next node in insertion order
                 if (currentNode.next != null) {
                     // Update next node's previous reference
                     currentNode.next.prev = currentNode.prev;
                 } else {
-                    // Update tail if it was the last node
+                    // If it's the tail of the insertion order list, move tail backward
                     tail = currentNode.prev;
                 }
-
                 size--;
                 return currentNode.value;
             }
+            // Move to next node in the bucket
             previousNode = currentNode;
             currentNode = currentNode.next;
         }
         return null;
     }
 
+    /**
+     * Return a string representation of the LinkedHashMap in insertion order
+     * 
+     * @return A string representation of the LinkedHashMap
+     */
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        Node<K, V> currentNode = head;
+
+        while (currentNode != null) {
+            sb.append(currentNode.key).append("=").append(currentNode.value);
+            if (currentNode.next != null) sb.append(", ");
+            currentNode = currentNode.next;
+        }
+        sb.append("}");
+        return sb.toString();
     }
 
     /**
