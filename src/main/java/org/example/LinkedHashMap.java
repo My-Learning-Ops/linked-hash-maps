@@ -140,6 +140,49 @@ public class LinkedHashMap<K, V> {
      * @return
      */
     public V remove(K key) {
+        // Calculate bucket index by hashing the key
+        int index = hash(key);
+        Node<K, V> currentNode = table[index];
+        Node<K, V> previousNode = null;
+
+        // Traverse through the linked hash map to find the key
+        while (currentNode != null) {
+            // Compare the current node's key with the provided key
+            if (Objects.equals(currentNode.key, key)) {
+                // If found, check if the previous node is null
+                if (previousNode == null) {
+                    // If so, remove from head of bucket
+                    table[index] = currentNode.next;
+                } else {
+                    // Otherwise, set the previous node's reference to the current node's next
+                    previousNode.next = currentNode.next;
+                }
+
+                // Remove from insetrion order list
+                if (currentNode.prev != null) {
+                    // Update previous node's next reference
+                    currentNode.prev.next = currentNode.next;
+                } else {
+                    // Update head if it was the first node
+                    head = currentNode.next;
+                }
+
+                // 
+                if (currentNode.next != null) {
+                    // Update next node's previous reference
+                    currentNode.next.prev = currentNode.prev;
+                } else {
+                    // Update tail if it was the last node
+                    tail = currentNode.prev;
+                }
+
+                size--;
+                return currentNode.value;
+            }
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+        }
+        return null;
     }
 
     @Override
