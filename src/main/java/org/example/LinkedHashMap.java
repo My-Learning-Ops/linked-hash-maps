@@ -22,16 +22,24 @@ public class LinkedHashMap<K, V> {
         }
     }
 
-    private final int capacity = 16;
+    private static final double LOAD_FACTOR = 0.75;
+    private double loadFactor;
+    private int capacity;
     private Node<K, V>[] table;
     private Node<K, V> head;
     private Node<K, V> tail;
     private int size = 0;
 
     // Constructs an empty LinkedHashMap with a default capacity
-    public LinkedHashMap() {
+    public LinkedHashMap(int initialCapacity, double loadFactor) {
+        this.capacity = initialCapacity;
+        this.loadFactor = loadFactor;
         // Creates an array of Node objects (Node<K, V>)
-        table = new Node[capacity];
+        this.table = new Node[capacity];
+    }
+
+    public LinkedHashMap() {
+        this(16, LOAD_FACTOR);
     }
 
     /**
