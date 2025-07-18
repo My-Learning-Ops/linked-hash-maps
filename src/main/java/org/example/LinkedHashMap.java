@@ -11,6 +11,7 @@ public class LinkedHashMap<K, V> {
     private static class Node<K, V> {
         K key;
         V value;
+        Node<K, V> hashNext;
         Node<K, V> next;
         Node<K, V> prev;
 
@@ -70,14 +71,14 @@ public class LinkedHashMap<K, V> {
                 return;
             }
             // Otherwise move to the next node
-            currentNode = currentNode.next;
+            currentNode = currentNode.hashNext;
         }
 
         // If key not found, create new node
         Node<K, V> newNode = new Node<>(key, value);
 
         // Insert new node at head of of bucket chain / linked list
-        newNode.next = table[index];
+        newNode.hashNext = table[index];
         table[index] = newNode;
 
         // Maintain insertion order by adding to the end of the doubly linked list
@@ -109,7 +110,7 @@ public class LinkedHashMap<K, V> {
             if (Objects.equals(currentNode.key, key)) {
                 return currentNode.value;
             }
-            currentNode = currentNode.next;
+            currentNode = currentNode.hashNext;
         }
         // If key not found, return null
         return null;
@@ -159,10 +160,10 @@ public class LinkedHashMap<K, V> {
                 // Check if this is the first node in the bucket
                 if (previousNode == null) {
                     // If so, set buckets head to the next node
-                    table[index] = currentNode.next;
+                    table[index] = currentNode.hashNext;
                 } else {
                     // Otherwise, bypass the current node in the chain
-                    previousNode.next = currentNode.next;
+                    previousNode.hashNext = currentNode.hashNext;
                 }
 
                 // If the node has a previous node in insertion order
@@ -187,7 +188,7 @@ public class LinkedHashMap<K, V> {
             }
             // Move to next node in the bucket
             previousNode = currentNode;
-            currentNode = currentNode.next;
+            currentNode = currentNode.hashNext;
         }
         return null;
     }
