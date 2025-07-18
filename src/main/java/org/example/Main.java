@@ -35,6 +35,12 @@ public class Main {
 
             // Print current state of the LinkedHashMap
             System.out.println("\nCurrent Map (insertion order): " + linkedHashMap.toString());
+
+            // Clear the map
+            linkedHashMap.clear();
+
+            // Print after clearing
+            System.out.println("\nMap after clear: " + linkedHashMap.toString());
             
 
         } catch (Exception e) {
