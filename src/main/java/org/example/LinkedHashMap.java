@@ -194,6 +194,17 @@ public class LinkedHashMap<K, V> {
     }
 
     /**
+     * Clears the map by removing all key value pairs
+     */
+    public void clear() {
+        // Clear the table and reset head, tail, and size
+        table = new Node[capacity];
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    /**
      * Return a string representation of the LinkedHashMap in insertion order
      * 
      * @return A string representation of the LinkedHashMap
