@@ -4,6 +4,13 @@ import java.util.Objects;
 
 /**
  * A generic implementation of a LinkedHashMap
+ * 
+ * This data structure combines a hash table and a doubly linked list to provide
+ * fast key based access while maintaining the order of insertion.
+ * 
+ * Internally keys are distributed into buckets based on their hash codes.
+ * Each bucket holds a linked list of nodes that hash to the same index,
+ * helping to efficiently handle collisions.
  */
 public class LinkedHashMap<K, V> {
 
