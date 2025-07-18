@@ -99,6 +99,11 @@ public class LinkedHashMap<K, V> {
             tail = newNode;
         }
         size++;
+
+        // Check if the load factor exceeds the threshold
+        if ((double) size / capacity > loadFactor) {
+            resize();
+        }
     }
 
     /**
@@ -210,6 +215,29 @@ public class LinkedHashMap<K, V> {
         head = null;
         tail = null;
         size = 0;
+    }
+
+
+    private void resize() {
+        // Store old capacity and double the capacity
+        int oldCapacity = capacity;
+        capacity *= 2;
+
+        // Store old table and create new table with new capacity
+        Node<K, V>[] oldTable = table;
+        table = new Node[capacity];
+        size = 0;
+        head = null;
+        tail = null;
+
+        for (int i = 0; i < oldCapacity; i++) {
+            Node<K, V> currentNode = oldTable[i];
+            while (currentNode != null) {
+                // Reinsert each node into the new table
+                put(currentNode.key, currentNode.value);
+                currentNode = currentNode.hashNext;
+            }
+        }
     }
 
     /**
